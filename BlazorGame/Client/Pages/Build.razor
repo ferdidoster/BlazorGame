@@ -1,6 +1,7 @@
 ﻿@page "/build"
 @inject IBananaService BananaService 
 @inject IUnitService UnitService
+@inject IToastService ToastService
 
 <h3>Build</h3>
 <div class="form-group">
@@ -30,7 +31,8 @@
 
         if (BananaService.Bananas < selectedUnit.BananaCost)
         {
-            needMoreBananas = true;
+            needMoreBananas = true; 
+            ToastService.ShowError("You need more Bananas", "Not enough Bananas!");
             return;
         }
 
