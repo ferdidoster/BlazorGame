@@ -1,6 +1,7 @@
 ﻿@page "/register"
 @inject IUnitService UnitService 
 @inject IJSRuntime JSRuntime 
+@inject NavigationManager NavigationManager
 
 <h3>Register</h3>
 <EditForm Model="user" OnValidSubmit="HandleRegistration">
@@ -35,13 +36,13 @@
     </div>
 
     <div class="form-group">
-        <label for="startUnit">Start Unit</label>
-        <InputSelect id="startUnit" class="form-control" @bind-Value="user.StartUnitId">
+        <label for="startUnit">Start Unit</label><br />
+        <InputRadioGroup id="startUnit" class="form-control" @bind-Value="user.StartUnitId">
             @foreach (var unit in UnitService.Units)
             {
-                <option value="@unit.Id">@unit.Title</option>
+                <InputRadio Value="@unit.Id" /><span class="unit-select">@unit.Title</span><br />
             }
-        </InputSelect>
+        </InputRadioGroup>
     </div>
 
     <div class="form-group">
@@ -68,6 +69,7 @@
 
     void HandleRegistration()
     {
-        JSRuntime.InvokeVoidAsync("console.log","This is the mighty new user:" user);
+        JSRuntime.InvokeVoidAsync("console.log","This is the mighty new user:", user);
+        NavigationManager.NavigateTo("login");
     }
 }
